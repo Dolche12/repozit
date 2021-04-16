@@ -9,5 +9,7 @@ amount1 = prompt('Во сколько это обойдется?'),
 expenses2 = prompt('Введите обязательную статью расходов?', 'Продукты'),
 amount2 = prompt('Во сколько это обойдется?'),
 income=prompt(''),
-budgetMonth = money - amount2 - amount1;
+budgetMonth = money - amount2 - amount1,
+mission=prompt('Сколько вы хотите накопить ?', '15000');
 console.log(budgetMonth);
+console.log('Цель будет достигнута за: ' + Math.ceil(mission / budgetMonth)+ ' месяцев');
