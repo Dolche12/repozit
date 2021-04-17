@@ -40,8 +40,7 @@ budgetDay = accumulatedMonth / 30;
     }
 
     function getStatusIncome(budget){   //Функция, которая возвращает описание budget 
-    return isNaN(budget) ? 'Что то пошло не так' :
-     (budget < 0) ? 'Что то пошло не так' :
+    return(budget < 0) ? 'Что то пошло не так' :
      (budget < 600) ? 'Что то пошло не так' :
      (budget === 600) ? 'У вас почти средний уровень дохода, но немного не хватает...' :
      (budget < 1200) ? 'У вас средний уровень дохода' :
