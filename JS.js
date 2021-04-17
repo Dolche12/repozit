@@ -10,11 +10,11 @@ expenses2 = prompt('Введите обязательную статью рас�
 amount2 = prompt('Во сколько это обойдется?'),
 budgetMonth = money - amount2 - amount1,
 mission = prompt('Цель заработать :', '15000')*1,
-budgetDay = budgetMonth/30,
+budgetDay = math.floor(accumulatedMonth/30),
 accumulatedMonth = getAccumulatedMonth();
-  console.log (typeof money);
-  console.log (typeof addExpenses);
-  console.log (typeof deposit);
+  console.log (showTypeOf (money));
+  console.log (showTypeOf (addExpenses));
+  console.log (showTypeOf (deposit));
   console.log (addExpenses.length);
   console.log('Период равен ' + period + ' месяцев');
   console.log('Цель заработать : ' + mission + ' рублей');
@@ -58,6 +58,8 @@ accumulatedMonth = getAccumulatedMonth();
       return Math.ceil(miss / budgetmonth);
     }
     
-
+    function showTypeOf (a){
+      return typeof a;
+    }
 
 
