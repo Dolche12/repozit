@@ -5,61 +5,46 @@ period = 5,
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую','интернет:, такси:, коммуналка:'),
 deposit = confirm('Есть ли у вас депозит в банке? (Ок-да, Отмена-нет)'),
 expenses1 = prompt('Введите обязательную статью расходов?', 'Транспорт'),
-amount1 = prompt('Во сколько это обойдется?'),
+amount1 = +prompt('Во сколько это обойдется?',3000),
 expenses2 = prompt('Введите обязательную статью расходов?', 'Продукты'),
-amount2 = prompt('Во сколько это обойдется?'),
-budgetMonth = money - amount2 - amount1,
-mission = prompt('Цель заработать :', '15000')*1,
-budgetDay = math.floor(accumulatedMonth/30),
-accumulatedMonth = getAccumulatedMonth();
-  console.log (showTypeOf (money));
-  console.log (showTypeOf (addExpenses));
-  console.log (showTypeOf (deposit));
-  console.log (addExpenses.length);
-  console.log('Период равен ' + period + ' месяцев');
-  console.log('Цель заработать : ' + mission + ' рублей');
-  console.log(addExpenses);
-  console.log(addExpenses.toLowerCase().split(', '));
-  console.log('Бюджет на месяц : ' + budgetMonth + ' рублей');
-  console.log('Цель будет достигнута за: ' + Math.ceil(mission / budgetMonth) + ' месяцев(-a)');
+amount2 = +prompt('Во сколько это обойдется?', 5000),
+mission = +prompt('Цель заработать :', '150000'),
+accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth()), // Переменная, которая присваевает работу двух функций с callback(-ом)
+budgetDay = accumulatedMonth / 30;
+  showTypeOf(money);               //
+  showTypeOf(addExpenses);         //Вызов функции
+  showTypeOf(deposit);             //
+  console.log('Расходы за месяц: ' + getExpensesMonth()); 
+  console.log('Возможные расходы: ' + addExpenses.split(', '));
+  console.log('Цель будет достигнута за: ' + getTargetMonth(mission, getAccumulatedMonth(money, getExpensesMonth())) + ' месяцев(-a)');
   console.log('Бюджет на день : ' + Math.floor(budgetDay) + ' рублей');
+  console.log(getStatusIncome(budgetDay));
 
-       if (budgetDay === 1200) {
-        console.log('У вас почти получилось попасть в группу с высокий уровень дохода! Постарайтесь лучше!');
-    } else if (budgetDay === 600) {
-        console.log('У вас почти средний уровень дохода, но немного не хватает...');
-    } else if (budgetDay > 1200) {
-        console.log('У вас высокий уровень дохода');
-    } else if (budgetDay < 1200 && budgetDay > 600) {
-        console.log('У вас средний уровень дохода');
-    } else if (budgetDay < 0) {
-        console.log('Что то пошло не так');
-    } else {
-        console.log('К сожалению у вас уровень дохода ниже среднего');
-    }
-
-    /*
-
-    Урок 4
-
-    */
-
-    function getExpensesMonth (){
+  /*
+          Функции
+  */
+    function getExpensesMonth (){           //Функция, которая возвращает сумму всех расходов за месяц
       return amount1 + amount2;
     }
-    
-    function getAccumulatedMonth (moneyMonth, ExpensesMonth){
-      return moneyMonth - ExpensesMonth;
+
+    function getAccumulatedMonth (moneyMonth, expensesMonth){    //Функция, которая возвращает накопления за месяц
+      return moneyMonth - expensesMonth;
     }
 
-    //  console.log('Накопления за месяц: ', getAccumulatedMonth(money, getExpensesMonth()))
-
-    function getTargetMonth (Miss, budgetmonth){
-      return Math.ceil(miss / budgetmonth);
+    function getTargetMonth (miss, callback){    //Функция, которая возвращает результат деления округляя в большую сторону
+      return Math.ceil(miss / callback);
     }
     
-    function showTypeOf (a){
-      return typeof a;
+    function showTypeOf (a){     //Функция, которая выводит в консоль тип данной переменной 
+      console.log(a, typeof(a));
     }
 
-
+    function getStatusIncome(budget){   //Функция, которая возвращает описание budget 
+    return isNaN(budget) ? 'Что то пошло не так' :
+     (budget < 0) ? 'Что то пошло не так' :
+     (budget < 600) ? 'Что то пошло не так' :
+     (budget === 600) ? 'У вас почти средний уровень дохода, но немного не хватает...' :
+     (budget < 1200) ? 'У вас средний уровень дохода' :
+     (budget === 1200) ? 'У вас почти получилось попасть в группу с высокий уровень дохода! Постарайтесь лучше!' :
+     'У вас высокий уровень дохода';
+    }
