@@ -10,7 +10,8 @@ expenses2 = prompt('Введите обязательную статью рас�
 amount2 = prompt('Во сколько это обойдется?'),
 budgetMonth = money - amount2 - amount1,
 mission = prompt('Цель заработать :', '15000')*1,
-budgetDay = budgetMonth/30;
+budgetDay = budgetMonth/30,
+accumulatedMonth = getAccumulatedMonth();
   console.log (typeof money);
   console.log (typeof addExpenses);
   console.log (typeof deposit);
@@ -36,3 +37,27 @@ budgetDay = budgetMonth/30;
     } else {
         console.log('К сожалению у вас уровень дохода ниже среднего');
     }
+
+    /*
+
+    Урок 4
+
+    */
+
+    function getExpensesMonth (){
+      return amount1 + amount2;
+    }
+    
+    function getAccumulatedMonth (moneyMonth, ExpensesMonth){
+      return moneyMonth - ExpensesMonth;
+    }
+
+    //  console.log('Накопления за месяц: ', getAccumulatedMonth(money, getExpensesMonth()))
+
+    function getTargetMonth (Miss, budgetmonth){
+      return Math.ceil(miss / budgetmonth);
+    }
+    
+
+
+
