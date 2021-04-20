@@ -7,7 +7,7 @@
     }
 
 
-    function isNumbe(n) {                               //Функция которая возвращает результат проверки числа n на конечность, на тип number 
+    function isNumber(n) {                               //Функция которая возвращает результат проверки числа n на конечность, на тип number 
         return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
