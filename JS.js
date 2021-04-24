@@ -13,7 +13,7 @@ let appData = {
     budget: +money, // Доход за месяц
     budgetDay: 0, // Дневной бюджет (доход за месяц / 30)
     budgetMonth: 0,
-    expensesMonth: 0,
+    expensesMonth: 0, //Расходы 
     asking: function() {
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
             'интернет, такси, коммуналка');
@@ -30,13 +30,13 @@ let appData = {
         }
         console.log(23);
     },
-    getExpensesMonth: function() {           
+    getExpensesMonth: function() {                           //Функция для подсчёта расходов
         appData.expensesMonth = 0;
         for (let key in appData.expenses) {
             appData.expensesMonth += appData.expenses[key];
         }
     },
-    getBudget: function() {    //Функция, которая возвращает накопления за месяц
+    getBudget: function() {                                  //Функция для подсчёта средств на месяц  и, соотвественно, на день
         if (!appData.budget) {
             appData.budget = 0;
         }
@@ -44,7 +44,7 @@ let appData = {
         appData.budgetDay = Math.floor(appData.budgetMonth / 30);
     },
     getTargetMonth: function() {    
-        if ((appData.mission / appData.budgetMonth) >= 0){                                                             // Проверка функции getTargetMonth на значение 
+        if ((appData.mission / appData.budgetMonth) >= 0){                              // Проверка функции getTargetMonth на значение 
             return console.log('Цель будет достигнута за ' + Math.ceil(appData.mission / appData.budgetMonth) + ' Месяца');
         }  else { 
              return console.log('Цель не будет достигнута');
@@ -81,14 +81,15 @@ let appData = {
         }
   /*
           Основная часть программы
-  */      appData.getExpensesMonth();
-          appData.getBudget();
-          appData.asking();
+  */      
+          appData.getExpensesMonth();           //Вычисление расходов
+          appData.getBudget();                  //Функция для подсчёта средств на месяц  и, соотвественно, на день
+          appData.asking();                     //Комплексный ввод переменных
 
           console.log(appData.expensesMonth);
-          appData.getTargetMonth();
-          appData.getStatusIncome();
+          appData.getTargetMonth();      //Функция, которая выводит в консоль значение о цели 
+          appData.getStatusIncome();     //Функция, которая выводит в консоль описание дохода
           console.log('Наша программа включает в себя данные: ');
-          for (let key in appData) {
+          for (let key in appData) {                                    //Вывод всех свойств и их значений из объекта appData
               console.log(key, appData[key]);
           }
