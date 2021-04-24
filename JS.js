@@ -1,6 +1,12 @@
 'use strict';
 
 let money;
+function start (){
+    do {
+        money = prompt('Ваш месячный доход?');
+    } while (!isNumber(money));
+    return +money;
+}
 start();
 let appData = {
     income: {}, // Статья доп дохода
@@ -68,19 +74,12 @@ let appData = {
   /*
           Функции
   */
-        function start (){
-            do {
-                money = prompt('Ваш месячный доход?');
-            } while (!isNumber(money));
-            return +money;
-        }
-
         function isNumber(n) {                               //Функция которая возвращает результат проверки числа n на конечность, на тип number 
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
   /*
           Основная часть программы
-  */      appData.asking(); //Комплексный ввод переменных
+  */      appData.asking();                    //Комплексный ввод переменных
           appData.getExpensesMonth();           //Вычисление расходов
           appData.getBudget();                  //Функция для подсчёта средств на месяц  и, соотвественно, на день
           
