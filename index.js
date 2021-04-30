@@ -3,11 +3,7 @@ incomeAdd = document.getElementsByTagName('button')[0],
 expensesAdd = document.getElementsByTagName('button')[1],
 check = document.querySelector('#deposit-check'),
 additionalIncomeItem = document.querySelector('.additional_income-item'),
-
-
 budgetMonthValue = document.getElementsByClassName('result-total budget_month-value')[0],
-
-
 budgetDayValue = document.getElementsByClassName('result-total budget_day-value')[0],
 expensesMonthValue = document.getElementsByClassName('result-total expenses_month-value')[0],
 additionalIncomeValue = document.getElementsByClassName('result-total additional_income-value')[0],
