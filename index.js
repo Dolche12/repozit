@@ -64,6 +64,7 @@ let appData = {
 
 
         appData.showResult();
+        appData.getAddExpenses();
     },
     addExpensesBlock: function(){
         let cloneExspensesItem = expensesItems[0].cloneNode(true);
@@ -85,6 +86,7 @@ let appData = {
         budgetMonthValue.value = appData.budgetMonth;
         budgetDayValue.value = appData.budgetDay;
         expensesMonthValue.value = appData.expensesMonth;
+        additionalExpensesValue.value = appData.addExpenses.join(', '); 
     },
     getAddExpenses: function(){
         let addExpenses = additionalExpensesItem.value.split(',');
