@@ -59,6 +59,7 @@ let appData = {
         appData.getAddExpenses();
         appData.getAddIncome(); 
 
+
         appData.showResult();
     },
     addExpensesBlock: function(){
@@ -83,7 +84,7 @@ let appData = {
         incomePeriodValue.value = appData.calcSavedMoney();
     },
     getAddExpenses: function() {
-        let addExpenses = additionalExpensesItem.value.split(',');
+        let addExpenses = appData.value.split(',');
         addExpenses.forEach(function(item){
             item = item.trim();
             if (item !== ''){
@@ -114,7 +115,7 @@ let appData = {
             let itemIncome = item.querySelector('.income-title').value,
             cashIcome = item.querySelector('.income-amount').value;
             if (itemIncome !== '' && cashIcome !== ''){
-                appData.incomeMonth += +cashIcome;
+                 appData.incomeMonth += +cashIcome;
             }
         });
     },
@@ -169,32 +170,12 @@ let appData = {
   /*
           Основная часть программы
   */     
+    const foo = appData.start.bind(appData);
+
     appData.blockStart();
     buttonStart.addEventListener('click', appData.start);
     expensesAdd.addEventListener('click', appData.addExpensesBlock);
     incomeAdd.addEventListener('click', appData.addIcomeBlock);
     periodSelect.addEventListener('input', appData.changePeriodSelect);
-    salaryAmount.addEventListener('input', appData.blockStart);
-    console.log(appData);
- /*
-          appData.asking();                    //Комплексный ввод переменных
-          appData.getExpensesMonth();           //Вычисление расходов
-          appData.getBudget();                  //Функция для подсчёта средств на месяц  и, соотвественно, на день
-          appData.getInfoDeposit();             //Функция для определения значения percentDeposit и moneyDeposit
-          string();                             //Функция на изменение строки 
+    start.addEventListener('click', foo);
 
-          console.log(appData.expensesMonth); //Вычисление расходов
-          appData.getTargetMonth();      //Функция, которая выводит в консоль значение о цели 
-          appData.getStatusIncome();     //Функция, которая выводит в консоль описание дохода
-          console.log('Наша программа включает в себя данные: ');
-          for (let key in appData) {                                    //Вывод всех свойств и их значений из объекта appData
-              console.log(key, appData[key]);
-          }
-
-          console.dir(appData.income);          //Доп доход
-          console.dir(appData.expenses);        //список обязательных статей расходов
-          console.log('Годовой процент депозита: ' + appData.percentDeposit);
-          console.log('Сумма депозита: ' + appData.moneyDeposit);
-          console.log(appData.addExpenses);                     //Изменённый массив addExpenses
-
-*/
