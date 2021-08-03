@@ -20,7 +20,6 @@ periodSelect = document.querySelector('.period-select'),
 incomeItems = document.querySelectorAll('.income-items'),
 incomeTitle = document.querySelector('.income-title'),
 incomeAmount = document.querySelector('.income-amount');
-
 function isNumber(n) {                               //Функция которая возвращает результат проверки числа n на конечность, на тип number 
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
@@ -53,31 +52,33 @@ const AppData = function() {
     this.moneyDeposit = 0;
 };
 
-AppData.prototype.blockInputs = function(disabled = true) {
+AppData.prototype.blockage = function (disabled = true) {
     document.querySelectorAll('.data input[type=text]').forEach(item => {
         item.disabled = disabled;
     });
+    document.querySelector('.data input[type=checkbox]').disabled = disabled;
+    incomeAdd.disabled = disabled;
+    expensesAdd.disabled = disabled;
 };
 
 AppData.prototype.start = function() {
-    this.getIncome();
-    this.budget = +salaryAmount.value;
-    this.getExpenses();
-    this.getBudget();
-    this.getAddExpenses();
-    this.getAddIncome(); 
-
-    console.log(this);
-
-    this.showResult();
-
-    if (start.textContent === 'Рассчитать') {
-        this.blockInputs();
+        if (start.textContent === 'Рассчитать') {
+        this.getExpenses();
+        this.getIncome();
+        this.getExpenses();
+        this.getAddExpenses();
+        this.getAddIncome();
+        this.getBudget();
+        this.getInfoDeposit();
+        this.getStatusIncome();
+        this.showResult();
+        this.blockage();
         start.textContent = 'Сбросить';
     } else {
         start.textContent = 'Рассчитать';
         this.reset();
     }
+    console.dir(this);
 };
 AppData.prototype.reset = function() {
     for (let i = incomeItems.length - 1; i > 0; i--) {
@@ -205,43 +206,21 @@ AppData.prototype.changePeriodSelect = function(event) {
 AppData.prototype.blockStart = function() {
     start.disabled = !salaryAmount.value.trim();
 };
+AppData.prototype.eventsListeners = function () {
+    const _this = this;
+    const foo = appData.start.bind(appData);
+    this.blockStart();
 
+    expensesAdd.addEventListener('click', this.addExpensesBlock);
+    incomeAdd.addEventListener('click', this.addIcomeBlock);
+    periodSelect.addEventListener('input', this.changePeriodSelect);
+    salaryAmount.addEventListener('input', this.blockStart);
+    start.addEventListener('click', foo);
+    };
 
 
 
 
 const appData = new AppData();
+appData.eventsListeners();
 
-console.log(appData)
-
-
-    const foo = appData.start.bind(appData);
-    appData.blockStart();
-
-    expensesAdd.addEventListener('click', appData.addExpensesBlock);
-    incomeAdd.addEventListener('click', appData.addIcomeBlock);
-    periodSelect.addEventListener('input', appData.changePeriodSelect);
-    salaryAmount.addEventListener('input', appData.blockStart);
-    start.addEventListener('click', foo);
- /*
-          appData.asking();                    //Комплексный ввод переменных
-          appData.getExpensesMonth();           //Вычисление расходов
-          appData.getBudget();                  //Функция для подсчёта средств на месяц  и, соотвественно, на день
-          appData.getInfoDeposit();             //Функция для определения значения percentDeposit и moneyDeposit
-          string();                             //Функция на изменение строки 
-
-          console.log(appData.expensesMonth); //Вычисление расходов
-          appData.getTargetMonth();      //Функция, которая выводит в консоль значение о цели 
-          appData.getStatusIncome();     //Функция, которая выводит в консоль описание дохода
-          console.log('Наша программа включает в себя данные: ');
-          for (let key in appData) {                                    //Вывод всех свойств и их значений из объекта appData
-              console.log(key, appData[key]);
-          }
-
-          console.dir(appData.income);          //Доп доход
-          console.dir(appData.expenses);        //список обязательных статей расходов
-          console.log('Годовой процент депозита: ' + appData.percentDeposit);
-          console.log('Сумма депозита: ' + appData.moneyDeposit);
-          console.log(appData.addExpenses);                     //Изменённый массив addExpenses
-
-*/
