@@ -1,3 +1,17 @@
+'use strict'
+
+
+/*
+1) Привязать контекст вызова функции start к appData 
+2) В нашем объекте везде использовать this как ссылку на объект appData (где это возможно)
+3) Проверить работу кнопок плюс и input-range (исправить если что-то не работает)
+4) Блокировать все input[type=text] с левой стороны после нажатия кнопки рассчитать, 
+после этого кнопка Рассчитать пропадает и появляется кнопка Сбросить, на которую 
+навешиваем событие и выполнение метода reset
+Метод reset должен всю программу возвращать в исходное состояние
+*/
+
+
 let buttonStart = document.getElementById('start'),
 incomeAdd = document.getElementsByTagName('button')[0],
 expensesAdd = document.getElementsByTagName('button')[1],
@@ -63,35 +77,6 @@ let appData = {
 
         this.showResult();
 
-        if (start.textContent === 'Рассчитать') {
-            this.blockInputs();
-            start.textContent = 'Сбросить';
-        } else {
-            start.textContent = 'Рассчитать';
-            this.reset();
-        }
-    },
-    blockInputs: function(disabled = true) {
-        document.querySelectorAll('.data input[type=text]').forEach(item => {
-            item.disabled = disabled;
-        });
-    },
-    reset: function() {
-        for (let i = incomeItems.length - 1; i > 0; i--) {
-            incomeItems[0].parentNode.removeChild(incomeItems[i]);
-        }
-        for (let i = expensesItems.length - 1; i > 0; i--) {
-            expensesItems[0].parentNode.removeChild(expensesItems[i]);
-        }
-        incomeAdd.style.display = '';
-        expensesAdd.style.display = '';
-        appData.blockInputs(false);
-        document.querySelectorAll('input[type=text]').forEach(item => {
-            item.value = '';
-        });
-        appData.getBudget();
-        periodSelect.value = document.querySelector('.period-amount').textContent = 1;
-        appData.blockStart();
     },
     addExpensesBlock: function(){
         let cloneExspensesItem = expensesItems[0].cloneNode(true);
@@ -193,29 +178,18 @@ let appData = {
         document.querySelector('.period-amount').textContent = event.target.value;
         incomePeriodValue.value = appData.calcSavedMoney();
     },
-    blockStart: function() {
-        start.disabled = !salaryAmount.value.trim();
-    },
 };
 
   /*
           Основная часть программы
   */     
     const foo = appData.start.bind(appData);
-    appData.blockStart();
 
     expensesAdd.addEventListener('click', appData.addExpensesBlock);
     incomeAdd.addEventListener('click', appData.addIcomeBlock);
     periodSelect.addEventListener('input', appData.changePeriodSelect);
     salaryAmount.addEventListener('input', appData.blockStart);
     start.addEventListener('click', foo);
-    document.querySelectorAll('[placeholder="Наименование"]').forEach(input => {
-        input.addEventListener('focus', addEventChangeText);
-    });
-    document.querySelectorAll('[placeholder="Сумма"]').forEach(input => {
-        input.addEventListener('focus', addEventChangeNumber);
-    });
-    console.log(appData);
  /*
           appData.asking();                    //Комплексный ввод переменных
           appData.getExpensesMonth();           //Вычисление расходов
