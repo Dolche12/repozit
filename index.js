@@ -85,13 +85,13 @@ let appData = {
         }
         incomeAdd.style.display = '';
         expensesAdd.style.display = '';
-        this.blockInputs(false);
+        appData.blockInputs(false);
         document.querySelectorAll('input[type=text]').forEach(item => {
             item.value = '';
         });
-        this.getBudget();
+        appData.getBudget();
         periodSelect.value = document.querySelector('.period-amount').textContent = 1;
-        this.blockStart();
+        appData.blockStart();
     },
     addExpensesBlock: function(){
         let cloneExspensesItem = expensesItems[0].cloneNode(true);
@@ -209,6 +209,13 @@ let appData = {
     periodSelect.addEventListener('input', appData.changePeriodSelect);
     salaryAmount.addEventListener('input', appData.blockStart);
     start.addEventListener('click', foo);
+    document.querySelectorAll('[placeholder="Наименование"]').forEach(input => {
+        input.addEventListener('focus', addEventChangeText);
+    });
+    document.querySelectorAll('[placeholder="Сумма"]').forEach(input => {
+        input.addEventListener('focus', addEventChangeNumber);
+    });
+    console.log(appData);
  /*
           appData.asking();                    //Комплексный ввод переменных
           appData.getExpensesMonth();           //Вычисление расходов
