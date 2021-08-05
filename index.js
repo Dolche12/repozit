@@ -69,6 +69,7 @@ let appData = {
         appData.budget = +salaryAmount.value;
         this.getExpenses();
         this.getIncome();
+        this.getExpensesMonth();
         this.getAddExpenses();
         this.getAddIncome(); 
         this.getBudget();
@@ -133,6 +134,12 @@ let appData = {
         incomeItems[0].parentNode.insertBefore(cloneIncomeItems, incomeAdd);
         incomeItems = document.querySelectorAll('.income-items');
         if (incomeItems.length === 3 ) incomeAdd.style.display = 'none';
+    },   
+    getExpensesMonth: function() { // Функция возвращает сумму всех обязательных расходов за месяц
+        appData.expensesMonth = 0;
+        for (let elem in this.expenses) {
+            this.expensesMonth += this.expenses[elem];
+        }
     },
     showResult: function() {
         budgetMonthValue.value = this.budgetMonth;
