@@ -62,6 +62,7 @@ AppData.prototype.start = function() {
     appData.budget = +salaryAmount.value;
     this.getExpenses();
     this.getIncome();
+    this.getExpensesMonth();
     this.getAddExpenses();
     this.getAddIncome(); 
     this.getBudget();
@@ -139,6 +140,12 @@ AppData.prototype.getAddExpenses = function() {
             _this.addExpenses.push(item);
         }
     })
+};
+AppData.prototype.getExpensesMonth = function() {
+        appData.expensesMonth = 0;
+        for (let elem in appData.expenses) {
+            appData.expensesMonth += appData.expenses[elem];
+        }
 };
 AppData.prototype.getAddIncome = function(){
     const _this = this;
