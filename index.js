@@ -52,60 +52,72 @@ const AppData = function() {
     this.moneyDeposit = 0;
 };
 
-AppData.prototype.blockage = function (disabled = true) {
-    document.querySelectorAll('.data input[type=text]').forEach(item => {
+AppData.prototype.blockinput = function (disabled = true) {
+    document.querySelectorAll('input[type=text]').forEach(function(item){
         item.disabled = disabled;
     });
-    document.querySelector('.data input[type=checkbox]').disabled = disabled;
-    incomeAdd.disabled = disabled;
-    expensesAdd.disabled = disabled;
 };
 
 AppData.prototype.start = function() {
-        if (start.textContent === 'Рассчитать') {
-        this.getExpenses();
-        this.getIncome();
-        this.getExpenses();
-        this.getAddExpenses();
-        this.getAddIncome();
-        this.getBudget();
-        this.getInfoDeposit();
-        this.getStatusIncome();
-        this.showResult();
-        this.blockage();
-        start.textContent = 'Сбросить';
-    } else {
+    appData.budget = +salaryAmount.value;
+    this.getExpenses();
+    this.getIncome();
+    this.getAddExpenses();
+    this.getAddIncome(); 
+    this.getBudget();
+    this.showResult();
+
+
+    if (start.textContent === 'Рассчитать'){
+        this.blockinput();
+        start.textContent = 'Cбросить';
+    }else{
         start.textContent = 'Рассчитать';
         this.reset();
     }
-    console.dir(this);
 };
 AppData.prototype.reset = function() {
     for (let i = incomeItems.length - 1; i > 0; i--) {
         incomeItems[0].parentNode.removeChild(incomeItems[i]);
-    }
-    for (let i = expensesItems.length - 1; i > 0; i--) {
+        }
+        for (let i = expensesItems.length - 1; i > 0; i--) {
         expensesItems[0].parentNode.removeChild(expensesItems[i]);
-    }
-    incomeAdd.style.display = '';
-    expensesAdd.style.display = '';
-    this.blockInputs(false);
-    document.querySelectorAll('input[type=text]').forEach(item => {
-        item.value = '';
-    });
-    this.getBudget();
-    periodSelect.value = document.querySelector('.period-amount').textContent = 1;
-    this.blockStart();
+        }
+        this.blockinput(false);
+        incomeAdd.style.display = '';
+        expensesAdd.style.display = '';
+        document.querySelectorAll('input[type=text]').forEach(function(item){
+            item.value = '';
+        });
+        appData.income = {}; // Статья доп дохода
+        appData.addIncome = [];
+        appData.expenses = {}; // список обязательных статей расходов
+        appData.addExpenses = []; // строка с перечислением дополнительных расходов
+        appData.deposit = false; // надичие депозита в банке
+        appData.budget = 0; // Доход за месяц
+        appData.budgetDay = 0; // Дневной бюджет (доход за месяц / 30)
+        appData.budgetMonth = 0;
+        appData.incomeMonth = 0;
+        appData.expensesMonth = 0; //Расходы 
+        appData.percentDeposit = 0;
+        appData.moneyDeposit = 0;
+        this.getBudget();
+        periodSelect.value = document.querySelector('.period-amount').textContent = 1;
+        this.blockStart();
 };
 AppData.prototype.addExpensesBlock = function(){
     let cloneExspensesItem = expensesItems[0].cloneNode(true);
-    expensesItems[0].parentNode.insertBefore(cloneExspensesItem, expensesAdd);
-    expensesItems = document.querySelectorAll('.expenses-items');
-    if (expensesItems.length === 3 ) expensesAdd.style.display = 'none';
+        cloneExspensesItem.querySelector('.expenses-title').value = '';
+        cloneExspensesItem.querySelector('.expenses-amount').value = '';
+        expensesItems[0].parentNode.insertBefore(cloneExspensesItem, expensesAdd);
+        expensesItems = document.querySelectorAll('.expenses-items');
+        if (expensesItems.length === 3 ) expensesAdd.style.display = 'none';
 };
 AppData.prototype.addIcomeBlock = function(){
-    let cloneExspensesItem = incomeItems[0].cloneNode(true);
-    incomeItems[0].parentNode.insertBefore(cloneExspensesItem, incomeAdd);
+    let cloneIncomeItems = incomeItems[0].cloneNode(true);
+    cloneIncomeItems.querySelector('.income-title').value = '';
+    cloneIncomeItems.querySelector('.income-amount').value = '';
+    incomeItems[0].parentNode.insertBefore(cloneIncomeItems, incomeAdd);
     incomeItems = document.querySelectorAll('.income-items');
     if (incomeItems.length === 3 ) incomeAdd.style.display = 'none';
 };
